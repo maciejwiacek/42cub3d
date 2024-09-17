@@ -6,7 +6,7 @@
 /*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:10:30 by mwiacek           #+#    #+#             */
-/*   Updated: 2024/09/16 14:51:11 by mwiacek          ###   ########.fr       */
+/*   Updated: 2024/09/17 13:23:28 by mwiacek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
+# include <stdio.h>
 
 typedef struct s_img
 {
@@ -52,6 +53,7 @@ void	init_game(t_game *game, char *av);
 void	parse_map(t_game *game, char *av);
 
 // UTILS
+bool	check_extension(char *file, char *ext);
 void	print_error(char *msg);
 
 #endif

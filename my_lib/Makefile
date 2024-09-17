@@ -37,6 +37,7 @@ LIBFT_FLS =		$(LIBFT_DIR)/ft_atoi.c \
 					$(LIBFT_DIR)/ft_strdup.c \
 					$(LIBFT_DIR)/ft_striteri.c \
 					$(LIBFT_DIR)/ft_strjoin.c \
+					$(LIBFT_DIR)/ft_strjoin_free.c \
 					$(LIBFT_DIR)/ft_strlcat.c \
 					$(LIBFT_DIR)/ft_strlcpy.c \
 					$(LIBFT_DIR)/ft_strlen.c \
