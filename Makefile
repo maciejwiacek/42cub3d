@@ -3,9 +3,9 @@ NAME = cub3d
 SRC_DIR = src
 
 SRC_FILES = main.c \
-			utils/error_funcs.c utils/check_extension.c \
+			utils/error_funcs.c utils/check_extension.c utils/to_dict.c \
 			init/init_game.c \
-			map/parse_map.c \
+			map/parse_map.c map/parse_textures.c \
 
 SRC = $(foreach file,$(SRC_FILES),$(SRC_DIR)/$(file))
 MLX = minilibx-linux
@@ -24,7 +24,7 @@ clone:
 $(NAME): $(OBJ)
 	make -C my_lib
 	make -C $(MLX)
-	cc -Wall -Wextra -Werror -L$(MLX) -lmlx_Linux -lX11 -lXext -lm $(OBJ) my_lib/my_lib.a -o $(NAME)
+	cc -Wall -Wextra -Werror $(OBJ) my_lib/my_lib.a -o $(NAME) -L$(MLX) -lmlx_Linux -lX11 -lXext -lm
 
 clean:
 	make -C my_lib clean

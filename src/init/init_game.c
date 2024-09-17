@@ -14,5 +14,6 @@
 
 void	init_game(t_game *game, char *av)
 {
+	game->mlx = mlx_init();
 	parse_map(game, av);
 }

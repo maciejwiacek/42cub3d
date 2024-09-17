@@ -19,4 +19,6 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		print_error("Wrong amount of arguments\n");
 	init_game(&game, av[1]);
+	for (int i = 0; game.map[i]; i++)
+		printf("%s\n", game.map[i]);
 }

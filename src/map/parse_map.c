@@ -32,6 +32,15 @@ static char	*read_map(int fd)
 	return (map);
 }
 
+static char	**process_map(t_game *game, char *map)
+{
+	char	**res;
+
+	res = ft_split(map, '\n');
+	game->txt = parse_textures(game, res);
+	return (res);
+}
+
 void	parse_map(t_game *game, char *av)
 {
 	int		map_fd;
@@ -43,7 +52,7 @@ void	parse_map(t_game *game, char *av)
 	if (map_fd < 0)
 		print_error("Wrong map\n");
 	map = read_map(map_fd);
-	game->map = ft_split(map, '\n');
+	game->map = process_map(game, map);
 	free(map);
 	close(map_fd);
 }

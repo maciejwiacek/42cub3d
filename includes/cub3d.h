@@ -22,6 +22,12 @@
 # include <stdbool.h>
 # include <stdio.h>
 
+typedef struct s_dict
+{
+	char	*key;
+	char	*value;
+}	t_dict;
+
 typedef struct s_img
 {
 	int		width;
@@ -35,25 +41,29 @@ typedef struct s_img
 
 typedef struct s_txt
 {
-	t_img	NO;
-	t_img	SO;
-	t_img	WE;
-	t_img	EA;
+	t_img	*NO;
+	t_img	*SO;
+	t_img	*WE;
+	t_img	*EA;
 	int		F;
 	int		C;
 }	t_txt;
 
 typedef struct s_game
 {
+	void	*mlx;
 	char	**map;
+	t_txt	*txt;
 }	t_game;
 
 // INIT
 void	init_game(t_game *game, char *av);
 void	parse_map(t_game *game, char *av);
+t_txt	*parse_textures(t_game *game, char **map);
 
 // UTILS
 bool	check_extension(char *file, char *ext);
 void	print_error(char *msg);
+t_dict	to_dict(char *str);
 
 #endif
