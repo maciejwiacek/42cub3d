@@ -3,7 +3,8 @@ NAME = cub3d
 SRC_DIR = src
 
 SRC_FILES = main.c \
-			utils/error_funcs.c utils/check_extension.c utils/to_dict.c \
+			utils/error_funcs.c utils/check_extension.c utils/fix_spaces.c utils/len_to_space.c \
+			utils/free_utils.c \
 			init/init_game.c \
 			map/parse_map.c map/parse_textures.c \
 

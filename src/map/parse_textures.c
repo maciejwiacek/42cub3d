@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_textures.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/18 12:46:50 by mwiacek           #+#    #+#             */
+/*   Updated: 2024/09/18 14:49:15 by mwiacek          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 t_img	*xpm_to_img(t_game *game, char *path)
@@ -33,33 +45,32 @@ t_txt	*parse_textures(t_game *game, char **map)
 {
 	int		i;
 	t_txt	*txt;
-	t_dict	txt_dict[6];
+	char	*tmp;
 
-	i = 0;
-	while (map[i][0] && ft_isalpha(map[i][0]))
-	{
-		txt_dict[i] = to_dict(map[i]);
-		++i;
-	}
 	txt = malloc(sizeof(t_txt));
 	i = 0;
-	while (map[i + 1][0] && map[i + 1][0] != '1')
+	while (i < 6)
 	{
-		if (!ft_strncmp(txt_dict[i].key, "NO", ft_strlen(txt_dict[i].key)))
-			txt->NO = xpm_to_img(game, txt_dict[i].value);
-		else if (!ft_strncmp(txt_dict[i].key, "SO", ft_strlen(txt_dict[i].key)))
-			txt->SO = xpm_to_img(game, txt_dict[i].value);
-		else if (!ft_strncmp(txt_dict[i].key, "WE", ft_strlen(txt_dict[i].key)))
-			txt->WE = xpm_to_img(game, txt_dict[i].value);
-		else if (!ft_strncmp(txt_dict[i].key, "EA", ft_strlen(txt_dict[i].key)))
-			txt->EA = xpm_to_img(game, txt_dict[i].value);
-		else if (!ft_strncmp(txt_dict[i].key, "F", ft_strlen(txt_dict[i].key)))
-			txt->F = rgb_to_hex(txt_dict[i].value);
-		else if (!ft_strncmp(txt_dict[i].key, "C", ft_strlen(txt_dict[i].key)))
-			txt->C = rgb_to_hex(txt_dict[i].value);
+		tmp = fix_spaces(map[i]);
+		if (!ft_strncmp(tmp, "NO", len_to_space(tmp)))
+			txt->NO = xpm_to_img(game, tmp + 3);
+		else if (!ft_strncmp(tmp, "SO", len_to_space(tmp)))
+			txt->SO = xpm_to_img(game, tmp + 3);
+		else if (!ft_strncmp(tmp, "WE", len_to_space(tmp)))
+			txt->WE = xpm_to_img(game, tmp + 3);
+		else if (!ft_strncmp(tmp, "EA", len_to_space(tmp)))
+			txt->EA = xpm_to_img(game, tmp + 3);
+		else if (!ft_strncmp(tmp, "F", len_to_space(tmp)))
+			txt->F = rgb_to_hex(tmp + 2);
+		else if (!ft_strncmp(tmp, "C", len_to_space(tmp)))
+			txt->C = rgb_to_hex(tmp + 2);
+		free(tmp);
 		++i;
 	}
 	if (!(txt->NO && txt->SO && txt->WE && txt->EA && txt->F && txt->C))
-		print_error("Wrong textures\n");
+	{
+		free_txt(game, txt);
+		return (NULL);
+	}
 	return (txt);
 }

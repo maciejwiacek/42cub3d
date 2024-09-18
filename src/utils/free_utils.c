@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_extension.c                                  :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 12:46:41 by mwiacek           #+#    #+#             */
-/*   Updated: 2024/09/18 12:46:41 by mwiacek          ###   ########.fr       */
+/*   Created: 2024/09/18 14:46:30 by mwiacek           #+#    #+#             */
+/*   Updated: 2024/09/18 14:51:20 by mwiacek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-bool	check_extension(char *file, char *ext)
+void	free_txt(t_game *game, t_txt *txt)
 {
-	int	len;
-	int	name_len;
+	if (txt->NO)
+		mlx_destroy_image(game->mlx, txt->NO);
+	if (txt->SO)
+		mlx_destroy_image(game->mlx, txt->SO);
+	if (txt->WE)
+		mlx_destroy_image(game->mlx, txt->WE);
+	if (txt->EA)
+		mlx_destroy_image(game->mlx, txt->EA);
+	free(txt);
+}
 
-	len = ft_strlen(ext);
-	name_len = ft_strlen(file);
-	if (!ft_strncmp(file + name_len - len, ext, len))
-		return (true);
-	return (false);
+void	free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i++])
+		free(arr[i]);
+	free(arr);
 }

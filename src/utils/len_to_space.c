@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_extension.c                                  :+:      :+:    :+:   */
+/*   len_to_space.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 12:46:41 by mwiacek           #+#    #+#             */
-/*   Updated: 2024/09/18 12:46:41 by mwiacek          ###   ########.fr       */
+/*   Created: 2024/09/18 14:40:06 by mwiacek           #+#    #+#             */
+/*   Updated: 2024/09/18 14:45:51 by mwiacek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-bool	check_extension(char *file, char *ext)
+int	len_to_space(char *s)
 {
-	int	len;
-	int	name_len;
+	int	count;
 
-	len = ft_strlen(ext);
-	name_len = ft_strlen(file);
-	if (!ft_strncmp(file + name_len - len, ext, len))
-		return (true);
-	return (false);
+	count = 0;
+	while (s[count] && s[count] != ' ')
+		count++;
+	return (count);
 }
