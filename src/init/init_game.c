@@ -12,8 +12,16 @@
 
 #include "../../includes/cub3d.h"
 
+char map[6][6] = {
+    {'1', '1', '1', '1', '1', '1'},
+    {'1', '1', '0', '1', '0', '1'},
+    {'1', '0', '0', '1', '0', '1'},
+    {'1', '0', '0', '0', '0', '1'},
+    {'1', '0', 'P', '0', '0', '1'},
+    {'1', '1', '1', '1', '1', '1'}
+};
+
 void	init_game(t_game *game, char *map_path)
 {
-	game->mlx = mlx_init();
-	parse_map(game, map_path);
+	printf("super");
 }
