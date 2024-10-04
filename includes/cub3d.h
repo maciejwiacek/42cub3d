@@ -6,7 +6,7 @@
 /*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:10:30 by mwiacek           #+#    #+#             */
-/*   Updated: 2024/09/18 14:51:15 by mwiacek          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:17:56 by mwiacek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,15 @@ typedef struct s_game
 // INIT
 void	init_game(t_game *game, char *map_path);
 void	parse_map(t_game *game, char *path);
-t_txt	*parse_textures(t_game *game, char **map);
+t_txt	*parse_textures(t_game *game, char **map, int *i);
+
+// VALIDATE
+bool	is_valid_char(char c);
+int		count_rows(char **arr);
+int		count_cols(char **arr);
+bool	open_horizontal(char **map);
+bool	open_vertical(char **map);
+bool	is_valid(char **map);
 
 // UTILS
 bool	check_extension(char *file, char *ext);

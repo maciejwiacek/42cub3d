@@ -6,7 +6,7 @@
 /*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:34:04 by mwiacek           #+#    #+#             */
-/*   Updated: 2024/09/18 15:05:42 by mwiacek          ###   ########.fr       */
+/*   Updated: 2024/10/04 18:38:59 by mwiacek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ static char	*read_map(char *path)
 		return (NULL);
 	while (line)
 	{
-		if (line[0] != '\n')
-		{
-			map = ft_strjoin_free(map, line);
-			if (!map)
-				return (NULL);
-		}
+		map = ft_strjoin_free(map, line);
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -48,15 +43,38 @@ static void	process_map(t_game *game, char *map)
 
 	i = 0;
 	res = ft_split(map, '\n');
-	game->txt = parse_textures(game, res);
+	game->txt = parse_textures(game, res, &i);
 	if (!game->txt)
 	{
 		free_arr(res);
-		return ;
+		print_error("Wrong textures\n");
 	}
-	while (i < 6)
-		free(res[i++]);
-	game->map = res += 6;
+	game->map = res + i;
+}
+
+static void	fill_1s(char **map)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		k = ft_strlen(map[i]) - 1;
+		while (map[i][j] == ' ' && map[i][j])
+			j++;
+		while (map[i][k] == ' ' && k > j)
+			k--;
+		while (map[i][j] && j < k)
+		{
+			if (map[i][j] == ' ')
+				map[i][j] = '1';
+			j++;
+		}
+		i++;
+	}
 }
 
 void	parse_map(t_game *game, char *path)
@@ -71,5 +89,8 @@ void	parse_map(t_game *game, char *path)
 	if (!map)
 		print_error("Reading map file failed\n");
 	process_map(game, map);
+	fill_1s(game->map);
+	if (!is_valid(game->map))
+		print_error("Map is invalid\n");
 	free(map);
 }

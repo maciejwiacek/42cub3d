@@ -6,7 +6,7 @@ SRC_FILES = main.c \
 			utils/error_funcs.c utils/check_extension.c utils/fix_spaces.c utils/len_to_space.c \
 			utils/free_utils.c \
 			init/init_game.c \
-			map/parse_map.c map/parse_textures.c \
+			map/parse_map.c map/parse_textures.c map/validate_map.c map/validate_utils.c \
 
 SRC = $(foreach file,$(SRC_FILES),$(SRC_DIR)/$(file))
 MLX = minilibx-linux

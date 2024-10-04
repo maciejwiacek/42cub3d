@@ -6,7 +6,7 @@
 /*   By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:10:05 by mwiacek           #+#    #+#             */
-/*   Updated: 2024/09/18 14:56:32 by mwiacek          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:23:33 by mwiacek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	main(int ac, char **av)
 		print_error("Wrong amount of arguments\n");
 	init_game(&game, av[1]);
 	printf("----- TEXTURES -----\n");
-	printf("EA: %s\n", game.txt->EA->addr);
-	printf("WE: %s\n", game.txt->WE->addr);
-	printf("NO: %s\n", game.txt->NO->addr);
-	printf("SO: %s\n", game.txt->SO->addr);
+	printf("EA: %d\n", game.txt->EA->width);
+	printf("WE: %d\n", game.txt->WE->width);
+	printf("NO: %d\n", game.txt->NO->width);
+	printf("SO: %d\n", game.txt->SO->width);
 	printf("----- COLORS -----\n");
 	printf("C: %d\n", game.txt->C);
 	printf("F: %d\n", game.txt->F);
