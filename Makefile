@@ -1,41 +1,73 @@
-NAME = cub3d
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mwiacek <mwiacek@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/25 15:31:38 by msmajdor          #+#    #+#              #
+#    Updated: 2025/02/03 19:01:13 by mwiacek          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRC_DIR = src
+# Compiler and flags
+CC          := cc
+CFLAGS      := -g -Wall -Wextra -Werror -Iincludes -Ilibs/libft -Ilibs/minilibx -I.
 
-SRC_FILES = main.c \
-			utils/error_funcs.c utils/check_extension.c utils/fix_spaces.c utils/len_to_space.c \
-			utils/free_utils.c \
-			init/init_game.c \
-			map/parse_map.c map/parse_textures.c map/validate_map.c map/validate_utils.c \
+# Project files
+NAME        := cub3d
+SRCS        := $(wildcard *.c) $(wildcard draw/*.c)
+OBJS        := $(SRCS:.c=.o)
 
-SRC = $(foreach file,$(SRC_FILES),$(SRC_DIR)/$(file))
-MLX = minilibx-linux
-OBJ = $(SRC:.c=.o)
+# Clean up
+RM          := rm -f
 
-all: clone $(NAME)
+# Libraries
+LIB_DIRS = libs/libft libs/minilibx
+LIBS = m ft mlx Xext X11
+LDFLAGS = $(addprefix -L, $(LIB_DIRS)) $(addprefix -l, $(LIBS))
 
-clone:
-	if [ ! -d "minilibx-linux" ]; then \
-  		git clone https://github.com/42Paris/minilibx-linux.git; \
-  	fi
+# Minilibx settings
+MLX_DIR 	:= libs/minilibx
+MLX_REPO 	:= https://github.com/42Paris/minilibx-linux.git
+MLX     	:= $(MLX_DIR)/libmlx.a
 
-%.o: %.c
-	cc -Wall -Wextra -Werror -c $< -o $@
+# Default target
+all: $(MLX) $(LIBS) $(NAME)
 
-$(NAME): $(OBJ)
-	make -C my_lib
-	make -C $(MLX)
-	cc -Wall -Wextra -Werror $(OBJ) my_lib/my_lib.a -o $(NAME) -L$(MLX) -lmlx_Linux -lX11 -lXext -lm
+# Clone minilibx if the directory doesn't exist, then compile it
+$(MLX):
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		git clone $(MLX_REPO) $(MLX_DIR); \
+	fi
 
+# Compile libft
+$(LIBS):
+	@$(foreach dir, $(LIB_DIRS), make -C $(dir);)
+
+# Link object files into the final executable
+$(NAME): $(OBJS)
+	@$(CC) $(OBJS) $(LDFLAGS) -o $(NAME)
+
+# Compile each .c file into an object (.o)
+%.o: %.c cub3d.h
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean object files
 clean:
-	make -C my_lib clean
-	rm -f $(OBJ)
+	@$(foreach dir, $(LIB_DIRS), $(RM) $(dir)/*.o;)
+	@$(RM) $(OBJS)
 
+# Clean and remove the final executable
 fclean: clean
-	make -C my_lib fclean
-	rm -rf $(MLX)
-	rm -f $(NAME)
+	@$(foreach dir, $(LIB_DIRS), $(RM) $(dir)/*.a;)
+	@$(RM) $(NAME)
+	@if [ -d "$(MLX_DIR)" ]; then \
+		rm -rf libs/minilibx; \
+	fi
 
+# Rebuild everything (fclean + all)
 re: fclean all
 
+# Mark these targets as phony to avoid conflicts with files named clean, fclean, etc.
 .PHONY: all clean fclean re
